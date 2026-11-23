@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../app/theme.dart';
 import '../../data/sample_data.dart';
@@ -35,9 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Search coming soon')),
-              );
+              context.push('/discover');
             },
             icon: const Icon(Icons.search),
           ),
@@ -78,8 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 20),
 
           // Due today
-          const SectionTitle(
-            title: 'Due today (2)',
+          SectionTitle(
+            title: 'Due today (${sampleTasks.length})',
             action: 'See all',
           ),
 
@@ -134,9 +133,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
               return InkWell(
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('${item.name} selected')),
-                  );
+                  // Open item detail screen.
+                  // Temporary ID until sample data has real IDs.
+                  context.push('/items/1');
                 },
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
@@ -198,29 +197,35 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
 
+      // Add pet or plant
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Add Pet / Plant coming soon')),
-          );
+          context.push('/items/new');
         },
         child: const Icon(Icons.add),
       ),
 
+      // Bottom navigation
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: 0,
         selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.secondaryText,
         onTap: (index) {
-          if (index != 0) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('This section is being developed'),
-              ),
-            );
+          switch (index) {
+            case 0:
+              break;
+
+            case 1:
+              context.go('/reminders');
+
+            case 2:
+              context.go('/discover');
+
+            case 3:
+              context.go('/settings');
           }
         },
         items: const [
@@ -237,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Discover',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.wb_sunny_outlined),
+            icon: Icon(Icons.settings_outlined),
             label: 'Settings',
           ),
         ],

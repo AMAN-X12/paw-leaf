@@ -8,6 +8,7 @@ class AppColors {
   static const Color border = Color(0xFFD0D0D0);
   static const Color secondaryText = Color(0xFF777777);
   static const Color error = Color(0xFFB83D3D);
+  static const Color lightSurface = Color(0xFFF3F3F3);
 }
 
 final ThemeData appTheme = ThemeData(
